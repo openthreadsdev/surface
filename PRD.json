@@ -1,0 +1,200 @@
+{
+  "projectMetadata": {
+    "projectName": "OpenThreads Trace | Compliance Exposure Scanner Browser Extension",
+    "version": "1.0.0",
+    "lastUpdated": "2026-02-28",
+    "projectLead": "OpenThreads.dev",
+    "distributionWedge": "Cross-platform (any product page)",
+    "restructuredFor": "Long-running agent workflows per Anthropic recommendations"
+  },
+  "productScope": {
+    "mvp": {
+      "description": "A cross-browser extension that scans any consumer-product page (Shopify, WooCommerce, Amazon, Etsy, DTC sites) for compliance-surface completeness signals, flags potentially risky marketing claims, and generates a shareable/reportable checklist with export to Threadmark-compatible JSON.",
+      "coreFeatures": [
+        "One-click scan of current page and extraction of page metadata (URL, title, SKU hints)",
+        "Rule-based detection of required/expected disclosure fields (materials, origin, manufacturer/contact, warnings, instructions, certifications)",
+        "Claim risk detection (eco, sustainable, biodegradable, non-toxic, etc.) with 'evidence required' prompts",
+        "Manual product category selector (textiles, children, cosmetics, electronics, general)",
+        "Risk score with explainable breakdown",
+        "Evidence capture (selected text + optional screenshot)",
+        "Export Threadmark-compatible JSON bundle"
+      ]
+    },
+    "explicitExclusions": {
+      "description": "Out of scope for v1:",
+      "exclusions": [
+        "Legal advice or guarantees of compliance",
+        "Automated regulator submissions",
+        "Automated platform enforcement",
+        "Authenticated scraping behind private portals",
+        "Machine-learning-based classification",
+        "Full supply-chain traceability"
+      ]
+    },
+    "boundaryNotes": "The extension provides heuristic completeness signals only. Users remain responsible for compliance decisions."
+  },
+  "personas": [
+    {
+      "name": "DTC Merchant",
+      "role": "Primary",
+      "painPoints": [
+        "Unsure what information is missing",
+        "Fear of marketplace takedowns",
+        "Compliance feels vague"
+      ],
+      "goals": ["Clear checklist", "Avoid risky claims", "Structured export"]
+    },
+    {
+      "name": "Compliance Consultant",
+      "role": "Secondary",
+      "painPoints": [
+        "Manual reviews are slow",
+        "Clients provide incomplete evidence"
+      ],
+      "goals": [
+        "Fast exposure triage",
+        "Shareable report",
+        "Drive structured workflows"
+      ]
+    }
+  ],
+  "complianceAttributes": {
+    "v1FieldGroups": [
+      {
+        "group": "Identity & Contacts",
+        "fields": [
+          { "key": "product_name", "required": true },
+          { "key": "brand", "required": true },
+          { "key": "manufacturer_name", "required": false },
+          { "key": "manufacturer_address", "required": false },
+          { "key": "contact_email_or_url", "required": false }
+        ]
+      },
+      {
+        "group": "Composition & Origin",
+        "fields": [
+          { "key": "materials", "required": false },
+          { "key": "country_of_origin", "required": false }
+        ]
+      },
+      {
+        "group": "Safety & Use",
+        "fields": [
+          { "key": "warnings", "required": false },
+          { "key": "instructions", "required": false },
+          { "key": "care_instructions", "required": false }
+        ]
+      },
+      {
+        "group": "Claims & Evidence",
+        "fields": [
+          { "key": "marketing_claims", "required": false },
+          { "key": "certifications", "required": false }
+        ]
+      }
+    ]
+  },
+  "enterpriseRequirements": {
+    "definitionOfDone": [
+      "GitHub Actions CI runs on PR: lint, format check, typecheck, unit tests, build, and packages an artifact",
+      "Pre-commit hook enforces formatting + linting + typecheck (fast path)",
+      "Pre-push hook runs unit tests (fast path); full build/test enforcement is in CI",
+      "CodeQL enabled (PR + weekly scheduled scan)",
+      "Coverage reporting enabled (Codecov or equivalent) with an initial floor threshold",
+      "Release workflow on tag produces signed/hashed artifacts and release notes"
+    ],
+    "nonFunctionalRequirements": {
+      "performance": ["Scan completes within 2 seconds"],
+      "security": [
+        "No automatic data exfiltration",
+        "User-initiated scan only",
+        "Sanitized DOM parsing"
+      ],
+      "maintainability": ["Rules defined as JSON", "Unit tests per rule"]
+    }
+  },
+  "riskRegister": [
+    {
+      "id": "R001",
+      "risk": "Users interpret score as legal advice",
+      "impact": "High",
+      "mitigation": ["Clear disclaimers", "Use 'signals' language"]
+    },
+    {
+      "id": "R002",
+      "risk": "False positives/negatives",
+      "impact": "Medium",
+      "mitigation": ["Confidence levels", "Manual override option"]
+    }
+  ],
+  "features": [
+    {
+      "id": "F005",
+      "phase": 0,
+      "name": "Engineering Baseline: Hooks + CI + Security Scanning",
+      "description": "Establish OpenThreads extension engineering baseline to support a public wedge and future suite products.",
+      "acceptanceCriteria": [
+        "Pre-commit runs format + lint + typecheck in < 15s on typical changes",
+        "Pre-push runs unit tests in < 60s on typical changes",
+        "CI required checks: lint, typecheck, unit tests, build, package artifact",
+        "CodeQL alerts visible in GitHub Security tab; scheduled weekly scan configured",
+        "Coverage uploaded on CI; project threshold configured (start low, ratchet up)",
+        "A reusable workflow/template exists for future OpenThreads extensions"
+      ],
+      "notes": [
+        "Prefer shared reusable GitHub Actions workflows for suite scalability.",
+        "Avoid strict per-file coverage gates early to prevent busywork."
+      ],
+      "status": "passes"
+    },
+    {
+      "id": "F010",
+      "phase": 1,
+      "name": "Extension Shell UI",
+      "description": "Popup with Scan button and category selector"
+    },
+    {
+      "id": "F020",
+      "phase": 1,
+      "name": "DOM Snapshot Capture",
+      "description": "Capture page snapshot on user click"
+    },
+    {
+      "id": "F030",
+      "phase": 1,
+      "name": "Rule Engine v1",
+      "description": "Data-driven JSON rules"
+    },
+    {
+      "id": "F040",
+      "phase": 1,
+      "name": "Risk Score Model",
+      "description": "Explainable scoring based on missing disclosures and risky claims"
+    },
+    {
+      "id": "F050",
+      "phase": 2,
+      "name": "Evidence Clipper",
+      "description": "Highlight and save text as evidence"
+    },
+    {
+      "id": "F060",
+      "phase": 2,
+      "name": "Threadmark JSON Export",
+      "description": "Export structured bundle"
+    }
+  ],
+  "successMetrics": [
+    {
+      "metric": "Time to first scan",
+      "target": "< 30 seconds from install"
+    },
+    {
+      "metric": "Export rate",
+      "target": "20% of active users export at least one bundle"
+    }
+  ],
+  "originalPRD": {
+    "summary": "Defines a cross-platform compliance exposure scanner extension to accelerate structured compliance capture and drive Threadmark adoption."
+  }
+}
