@@ -31,7 +31,7 @@ const FIELD_SEARCH_PATTERNS: Record<string, RegExp[]> = {
     /(?:materials?|composition|made\s*(?:from|of|with)|fabric|ingredients?)[:\s]+(.+?)(?:\n|$)/i,
   ],
   country_of_origin: [
-    /(?:country\s*of\s*origin|made\s*in|manufactured\s*in|origin|product\s*of)[:\s]+(.+?)(?:\n|$)/i,
+    /(?:country\s*of\s*origin|made\s*in|manufactured\s*in|product\s*of)[:\s]+(.+?)(?:\n|$)/i,
   ],
   warnings: [
     /(?:warning|caution|danger|hazard|prop\s*65|⚠)[:\s]+(.+?)(?:\n|$)/i,
@@ -40,7 +40,7 @@ const FIELD_SEARCH_PATTERNS: Record<string, RegExp[]> = {
     /(?:instructions?|directions?|how\s*to\s*use|usage)[:\s]+(.+?)(?:\n|$)/i,
   ],
   care_instructions: [
-    /(?:care\s*instructions?|wash|cleaning|maintenance)[:\s]+(.+?)(?:\n|$)/i,
+    /(?:care\s*instructions?|cleaning|maintenance)[:\s]+(.+?)(?:\n|$)/i,
   ],
   marketing_claims: [/(?:features?|benefits?|highlights?)[:\s]+(.+?)(?:\n|$)/i],
   certifications: [
@@ -83,7 +83,7 @@ export function detectField(
 
 export function evaluateFields(
   snapshot: PageSnapshot,
-  _category: ProductCategory,
+  _category: ProductCategory, // TODO: Use category to apply category-specific field requirements
 ): FieldResult[] {
   const results: FieldResult[] = [];
 
@@ -110,16 +110,20 @@ export function evaluateFields(
 
 export function detectClaims(snapshot: PageSnapshot): ClaimFlag[] {
   const flags: ClaimFlag[] = [];
-  const lowerText = snapshot.textContent.toLowerCase();
 
   for (const kw of CLAIM_KEYWORDS) {
     const pattern = new RegExp(`\\b${escapeRegex(kw.pattern)}\\b`, "gi");
-    const match = lowerText.match(pattern);
-    if (match) {
-      // Extract surrounding context as source
-      const idx = lowerText.indexOf(kw.pattern.toLowerCase());
+    let match: RegExpExecArray | null;
+
+    // Find all matches of this claim keyword
+    while ((match = pattern.exec(snapshot.textContent)) !== null) {
+      const idx = match.index;
+      const matchedText = match[0];
       const start = Math.max(0, idx - 40);
-      const end = Math.min(lowerText.length, idx + kw.pattern.length + 40);
+      const end = Math.min(
+        snapshot.textContent.length,
+        idx + matchedText.length + 40,
+      );
       const source = snapshot.textContent.slice(start, end).trim();
 
       flags.push({

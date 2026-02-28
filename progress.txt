@@ -26,3 +26,12 @@ F020 - DOM Snapshot Capture [PASSES]
 - Content script handles SCAN message and returns snapshot to popup
 - jsdom added for DOM-based testing
 - 19 new unit tests for snapshot module (39 total passing)
+
+F030 - Rule Engine v1 [PASSES]
+- engine.ts: runRules() orchestrates field evaluation and claim detection against a PageSnapshot
+- detectField: checks meta tags (high confidence 0.9) then text patterns (0.7) for each compliance field
+- evaluateFields: runs all 12 field definitions from field-groups.ts against snapshot, returns FieldResult[]
+- detectClaims: case-insensitive keyword matching against claim-keywords.ts with surrounding context extraction
+- FIELD_SEARCH_PATTERNS: regex map for all 12 fields (product_name, brand, materials, warnings, etc.)
+- META_KEY_MAP: Open Graph / structured data key lookups for meta-based detection
+- 20 new unit tests for engine module (59 total passing)

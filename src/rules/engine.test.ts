@@ -195,6 +195,18 @@ describe("detectClaims", () => {
     expect(nonToxic?.source).toContain("non-toxic");
     expect(nonToxic?.source?.length).toBeGreaterThan(10);
   });
+
+  it("detects multiple occurrences of the same claim", () => {
+    const snapshot = makeSnapshot({
+      textContent:
+        "Our eco-friendly products are great. We also have eco-friendly packaging.",
+    });
+    const claims = detectClaims(snapshot);
+    const ecoFriendlyClaims = claims.filter((c) => c.claim === "eco-friendly");
+    expect(ecoFriendlyClaims).toHaveLength(2);
+    expect(ecoFriendlyClaims[0].source).toContain("products");
+    expect(ecoFriendlyClaims[1].source).toContain("packaging");
+  });
 });
 
 describe("runRules", () => {
