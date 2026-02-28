@@ -151,7 +151,8 @@
       "id": "F010",
       "phase": 1,
       "name": "Extension Shell UI",
-      "description": "Popup with Scan button and category selector"
+      "description": "Popup with Scan button and category selector",
+      "status": "passes"
     },
     {
       "id": "F020",

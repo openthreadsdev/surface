@@ -16,10 +16,113 @@ body {
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
   padding: 16px;
 }
 
-h1 {
+.header {
+  margin-bottom: 20px;
+}
+
+.header h1 {
   font-size: 18px;
-  margin-bottom: 4px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #666;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+.btn-scan {
+  margin-top: 4px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-scan:hover {
+  background: #1d4ed8;
+}
+
+.btn-scan:active {
+  background: #1e40af;
+}
+
+.btn-scan:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.status.scanning {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.status.error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.status.success {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.results {
+  flex: 1;
+  margin-top: 16px;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
 }

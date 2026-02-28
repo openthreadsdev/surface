@@ -1,0 +1,12 @@
+F005 - Engineering Baseline: Hooks + CI + Security Scanning [PASSES]
+- TypeScript + Vite build pipeline for Chrome MV3 extension
+- ESLint (flat config) + Prettier with pre-commit hook (format, lint, typecheck)
+- Pre-push hook runs unit tests
+- GitHub Actions CI: lint, typecheck, test, build, package artifact
+- CodeQL security scanning (PR + weekly schedule)
+- Release workflow with signed/hashed artifacts on tag push
+- Vitest with v8 coverage at 50% threshold floor
+- Extension scaffold: manifest.json, popup, content script, background service worker
+- Data-driven rule definitions: field-groups.ts, claim-keywords.ts
+- Core types: ScanResult, FieldResult, ClaimFlag, ProductCategory
+- 13 passing unit tests across 3 test files

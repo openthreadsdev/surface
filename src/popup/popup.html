@@ -8,8 +8,36 @@
   </head>
   <body>
     <div id="app">
-      <h1>OpenThreads Trace</h1>
-      <p>Compliance Exposure Scanner</p>
+      <header class="header">
+        <h1>OpenThreads Trace</h1>
+        <p class="subtitle">Compliance Exposure Scanner</p>
+      </header>
+
+      <div class="controls">
+        <label for="category-select" class="label">Product Category</label>
+        <select id="category-select" class="select">
+          <option value="general">General</option>
+          <option value="textiles">Textiles</option>
+          <option value="children">Children's Products</option>
+          <option value="cosmetics">Cosmetics</option>
+          <option value="electronics">Electronics</option>
+        </select>
+
+        <button id="scan-btn" class="btn-scan" type="button">Scan Page</button>
+      </div>
+
+      <div id="status" class="status" hidden>
+        <p id="status-message"></p>
+      </div>
+
+      <div id="results" class="results" hidden></div>
+
+      <footer class="footer">
+        <p class="disclaimer">
+          Signals only — not legal advice. You are responsible for compliance
+          decisions.
+        </p>
+      </footer>
     </div>
     <script type="module" src="popup.ts"></script>
   </body>
