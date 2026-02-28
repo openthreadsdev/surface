@@ -158,7 +158,8 @@
       "id": "F020",
       "phase": 1,
       "name": "DOM Snapshot Capture",
-      "description": "Capture page snapshot on user click"
+      "description": "Capture page snapshot on user click",
+      "status": "passes"
     },
     {
       "id": "F030",
