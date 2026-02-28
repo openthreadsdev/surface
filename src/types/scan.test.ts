@@ -51,8 +51,6 @@ describe("scan types", () => {
       timestamp: new Date().toISOString(),
       fields: [],
       claims: [],
-      riskScore: 0,
-      maxScore: 100,
       riskBreakdown: {
         score: 0,
         maxScore: 100,
@@ -63,6 +61,8 @@ describe("scan types", () => {
     expect(result.url).toContain("https://");
     expect(result.category).toBe("general");
     expect(result.fields).toEqual([]);
-    expect(result.riskScore).toBeLessThanOrEqual(result.maxScore);
+    expect(result.riskBreakdown?.score).toBeLessThanOrEqual(
+      result.riskBreakdown?.maxScore ?? 0,
+    );
   });
 });

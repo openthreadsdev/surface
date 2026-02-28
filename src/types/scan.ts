@@ -52,7 +52,5 @@ export interface ScanResult {
   timestamp: string;
   fields: FieldResult[];
   claims: ClaimFlag[];
-  riskScore: number;
-  maxScore: number;
-  riskBreakdown: RiskScoreBreakdown;
+  riskBreakdown?: RiskScoreBreakdown;
 }

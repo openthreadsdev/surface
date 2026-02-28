@@ -122,6 +122,17 @@ describe("calculateClaimPenalties", () => {
     expect(penalties).toHaveLength(1);
   });
 
+  it("deduplicates claims case-insensitively", () => {
+    const claims = [
+      makeClaim({ claim: "Eco-Friendly", riskLevel: "high" }),
+      makeClaim({ claim: "eco-friendly", riskLevel: "high" }),
+      makeClaim({ claim: "ECO-FRIENDLY", riskLevel: "high" }),
+    ];
+    const penalties = calculateClaimPenalties(claims);
+    expect(penalties).toHaveLength(1);
+    expect(penalties[0].claim).toBe("Eco-Friendly"); // preserves first occurrence's casing
+  });
+
   it("includes reason with risk level", () => {
     const claims = [makeClaim({ claim: "non-toxic", riskLevel: "high" })];
     const penalties = calculateClaimPenalties(claims);

@@ -43,8 +43,9 @@ export function calculateClaimPenalties(claims: ClaimFlag[]): ClaimPenalty[] {
   const penalties: ClaimPenalty[] = [];
 
   for (const claim of claims) {
-    if (seen.has(claim.claim)) continue;
-    seen.add(claim.claim);
+    const key = claim.claim.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
 
     const weight = CLAIM_RISK_WEIGHTS[claim.riskLevel];
     penalties.push({
@@ -66,6 +67,20 @@ export function calculateMaxFieldScore(fields: FieldResult[]): number {
   return max;
 }
 
+/**
+ * Calculates the risk score breakdown for a scan result.
+ *
+ * The score is the sum of field penalties (missing required/optional fields)
+ * and claim penalties (unsubstantiated marketing claims).
+ *
+ * The maxScore represents the maximum possible penalty:
+ * - All fields missing (sum of all field weights)
+ * - Plus actual claim penalties found on the page
+ *
+ * Note: Since claim penalties are added to both score and maxScore,
+ * the score/maxScore ratio varies primarily based on field completeness.
+ * Claims increase the absolute score but don't change the percentage.
+ */
 export function calculateRiskScore(
   fields: FieldResult[],
   claims: ClaimFlag[],
