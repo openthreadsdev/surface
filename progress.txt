@@ -10,3 +10,19 @@ F005 - Engineering Baseline: Hooks + CI + Security Scanning [PASSES]
 - Data-driven rule definitions: field-groups.ts, claim-keywords.ts
 - Core types: ScanResult, FieldResult, ClaimFlag, ProductCategory
 - 13 passing unit tests across 3 test files
+
+F010 - Extension Shell UI [PASSES]
+- Popup HTML with header, category selector (5 categories), Scan button, status area, results placeholder, disclaimer footer
+- Styled popup CSS (360x480px, blue scan button, status states for scanning/error/success)
+- popup-ui.ts: pure testable functions (getSelectedCategory, setStatus, setScanEnabled)
+- popup.ts: wires DOM events, sends SCAN message to content script via chrome.tabs.sendMessage
+- 7 new unit tests for popup UI logic (20 total passing)
+
+F020 - DOM Snapshot Capture [PASSES]
+- snapshot.ts: captureSnapshot() extracts URL, title, timestamp, meta tags, text content, and SKU hints
+- extractMetaTags: parses meta[name], meta[property], meta[itemprop] from the DOM
+- extractTextContent: clones body, strips script/style/noscript/svg/iframe, collapses whitespace
+- extractSkuHints: regex-based extraction for SKU, ASIN, UPC, EAN, ISBN, Item/Model/Part numbers with deduplication
+- Content script handles SCAN message and returns snapshot to popup
+- jsdom added for DOM-based testing
+- 19 new unit tests for snapshot module (39 total passing)
