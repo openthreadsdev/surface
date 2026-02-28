@@ -28,12 +28,18 @@ describe("buildThreadmarkBundle", () => {
     expect(bundle.generator).toBe(THREADMARK_GENERATOR);
   });
 
-  it("sets exportedAt to current time", () => {
+  it("sets exportedAt to current time when not provided", () => {
     const before = new Date().toISOString();
     const bundle = buildThreadmarkBundle(makeScanResult());
     const after = new Date().toISOString();
     expect(bundle.exportedAt >= before).toBe(true);
     expect(bundle.exportedAt <= after).toBe(true);
+  });
+
+  it("accepts custom exportedAt timestamp", () => {
+    const customTime = "2026-02-28T15:30:00.000Z";
+    const bundle = buildThreadmarkBundle(makeScanResult(), customTime);
+    expect(bundle.exportedAt).toBe(customTime);
   });
 
   it("maps scan metadata from ScanResult", () => {
@@ -197,8 +203,10 @@ describe("serializeBundle", () => {
 
 describe("generateFilename", () => {
   it("generates filename with hostname and date", () => {
-    const bundle = buildThreadmarkBundle(makeScanResult());
-    bundle.exportedAt = "2026-02-28T15:30:00.000Z";
+    const bundle = buildThreadmarkBundle(
+      makeScanResult(),
+      "2026-02-28T15:30:00.000Z",
+    );
     const filename = generateFilename(bundle);
     expect(filename).toBe("threadmark-example.com-2026-02-28.json");
   });
@@ -206,15 +214,17 @@ describe("generateFilename", () => {
   it("sanitizes unusual hostnames", () => {
     const bundle = buildThreadmarkBundle(
       makeScanResult({ url: "https://shop.example.co.uk/item" }),
+      "2026-03-01T00:00:00.000Z",
     );
-    bundle.exportedAt = "2026-03-01T00:00:00.000Z";
     const filename = generateFilename(bundle);
     expect(filename).toBe("threadmark-shop.example.co.uk-2026-03-01.json");
   });
 
   it("handles invalid URLs gracefully", () => {
-    const bundle = buildThreadmarkBundle(makeScanResult({ url: "not-a-url" }));
-    bundle.exportedAt = "2026-02-28T00:00:00.000Z";
+    const bundle = buildThreadmarkBundle(
+      makeScanResult({ url: "not-a-url" }),
+      "2026-02-28T00:00:00.000Z",
+    );
     const filename = generateFilename(bundle);
     expect(filename).toBe("threadmark-unknown-2026-02-28.json");
   });

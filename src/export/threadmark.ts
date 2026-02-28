@@ -1,12 +1,17 @@
-import type { ScanResult, ThreadmarkBundle } from "../types/scan.js";
+import type {
+  ScanResult,
+  ThreadmarkBundle,
+  RiskSummary,
+} from "../types/scan.js";
 
 export const THREADMARK_VERSION = "1.0.0";
 export const THREADMARK_GENERATOR = "openthreads-trace";
 
 export function buildThreadmarkBundle(
   scanResult: ScanResult,
+  exportedAt?: string,
 ): ThreadmarkBundle {
-  const riskSummary = scanResult.riskBreakdown
+  const riskSummary: RiskSummary | null = scanResult.riskBreakdown
     ? {
         score: scanResult.riskBreakdown.score,
         maxScore: scanResult.riskBreakdown.maxScore,
@@ -18,7 +23,7 @@ export function buildThreadmarkBundle(
   return {
     version: THREADMARK_VERSION,
     generator: THREADMARK_GENERATOR,
-    exportedAt: new Date().toISOString(),
+    exportedAt: exportedAt ?? new Date().toISOString(),
     scan: {
       url: scanResult.url,
       title: scanResult.title,

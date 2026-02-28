@@ -55,25 +55,29 @@ export interface EvidenceClip {
   claimKeyword?: string;
 }
 
+export interface ScanMetadata {
+  url: string;
+  title: string;
+  category: ProductCategory;
+  scannedAt: string;
+}
+
+export interface RiskSummary {
+  score: number;
+  maxScore: number;
+  fieldPenaltyCount: number;
+  claimPenaltyCount: number;
+}
+
 export interface ThreadmarkBundle {
   version: string;
   generator: string;
   exportedAt: string;
-  scan: {
-    url: string;
-    title: string;
-    category: ProductCategory;
-    scannedAt: string;
-  };
+  scan: ScanMetadata;
   fields: FieldResult[];
   claims: ClaimFlag[];
   evidence: EvidenceClip[];
-  riskSummary: {
-    score: number;
-    maxScore: number;
-    fieldPenaltyCount: number;
-    claimPenaltyCount: number;
-  } | null;
+  riskSummary: RiskSummary | null;
 }
 
 export interface ScanResult {
