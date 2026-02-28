@@ -57,4 +57,12 @@ F050 - Evidence Clipper [PASSES]
 - Content script handles CLIP_EVIDENCE message: captures window selection, creates clip, returns to popup
 - 21 new unit tests for clipper module (100 total passing)
 
-Next task: F060 - Threadmark JSON Export (Phase 2)
+F060 - Threadmark JSON Export [PASSES]
+- threadmark.ts: pure functions for building and serializing Threadmark-compatible JSON bundles
+- buildThreadmarkBundle: packages ScanResult into ThreadmarkBundle with version, generator, export timestamp, scan metadata, fields, claims, evidence, and risk summary
+- serializeBundle: pretty-prints bundle as 2-space indented JSON string
+- generateFilename: creates hostname+date based filename (e.g. threadmark-example.com-2026-02-28.json)
+- ThreadmarkBundle type added to types/scan.ts with scan metadata, riskSummary (nullable), and all scan data
+- 14 new unit tests for export module (114 total passing)
+
+All MVP features complete (F005-F060).

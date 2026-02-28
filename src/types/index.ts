@@ -7,5 +7,6 @@ export type {
   ClaimPenalty,
   RiskScoreBreakdown,
   EvidenceClip,
+  ThreadmarkBundle,
   ScanResult,
 } from "./scan.js";

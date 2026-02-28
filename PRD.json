@@ -186,7 +186,8 @@
       "id": "F060",
       "phase": 2,
       "name": "Threadmark JSON Export",
-      "description": "Export structured bundle"
+      "description": "Export structured bundle",
+      "status": "passes"
     }
   ],
   "successMetrics": [
