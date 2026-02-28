@@ -6,5 +6,6 @@ export type {
   FieldPenalty,
   ClaimPenalty,
   RiskScoreBreakdown,
+  EvidenceClip,
   ScanResult,
 } from "./scan.js";

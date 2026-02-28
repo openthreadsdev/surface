@@ -45,6 +45,16 @@ export interface RiskScoreBreakdown {
   claimPenalties: ClaimPenalty[];
 }
 
+export interface EvidenceClip {
+  id: string;
+  text: string;
+  context: string;
+  url: string;
+  timestamp: string;
+  fieldKey?: string;
+  claimKeyword?: string;
+}
+
 export interface ScanResult {
   url: string;
   title: string;
@@ -53,4 +63,5 @@ export interface ScanResult {
   fields: FieldResult[];
   claims: ClaimFlag[];
   riskBreakdown?: RiskScoreBreakdown;
+  evidence: EvidenceClip[];
 }
