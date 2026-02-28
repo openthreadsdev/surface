@@ -35,3 +35,15 @@ F030 - Rule Engine v1 [PASSES]
 - FIELD_SEARCH_PATTERNS: regex map for all 12 fields (product_name, brand, materials, warnings, etc.)
 - META_KEY_MAP: Open Graph / structured data key lookups for meta-based detection
 - 20 new unit tests for engine module (59 total passing)
+
+F040 - Risk Score Model [PASSES]
+- scoring.ts: calculateRiskScore() produces explainable breakdown from fields and claims
+- calculateFieldPenalties: required fields penalized at 10 pts, optional at 3 pts when missing
+- calculateClaimPenalties: high=8, medium=5, low=2 pts per unique unsubstantiated claim (deduplicated)
+- calculateMaxFieldScore: computes theoretical max from field definitions
+- RiskScoreBreakdown type with fieldPenalties and claimPenalties arrays for explainability
+- Updated ScanResult type with riskBreakdown field
+- New types: FieldPenalty, ClaimPenalty, RiskScoreBreakdown exported from types/index.ts
+- 18 new unit tests for scoring module (78 total passing)
+
+Next task: F050 - Evidence Clipper (Phase 2)

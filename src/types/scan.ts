@@ -23,6 +23,28 @@ export interface ClaimFlag {
   source?: string;
 }
 
+export interface FieldPenalty {
+  key: string;
+  group: string;
+  required: boolean;
+  penalty: number;
+  reason: string;
+}
+
+export interface ClaimPenalty {
+  claim: string;
+  riskLevel: "low" | "medium" | "high";
+  penalty: number;
+  reason: string;
+}
+
+export interface RiskScoreBreakdown {
+  score: number;
+  maxScore: number;
+  fieldPenalties: FieldPenalty[];
+  claimPenalties: ClaimPenalty[];
+}
+
 export interface ScanResult {
   url: string;
   title: string;
@@ -30,6 +52,5 @@ export interface ScanResult {
   timestamp: string;
   fields: FieldResult[];
   claims: ClaimFlag[];
-  riskScore: number;
-  maxScore: number;
+  riskBreakdown?: RiskScoreBreakdown;
 }
