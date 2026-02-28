@@ -165,7 +165,8 @@
       "id": "F030",
       "phase": 1,
       "name": "Rule Engine v1",
-      "description": "Data-driven JSON rules"
+      "description": "Data-driven JSON rules",
+      "status": "passes"
     },
     {
       "id": "F040",
