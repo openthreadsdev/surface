@@ -46,4 +46,15 @@ F040 - Risk Score Model [PASSES]
 - New types: FieldPenalty, ClaimPenalty, RiskScoreBreakdown exported from types/index.ts
 - 18 new unit tests for scoring module (78 total passing)
 
-Next task: F050 - Evidence Clipper (Phase 2)
+F050 - Evidence Clipper [PASSES]
+- clipper.ts: pure functions for creating and managing evidence clips
+- createClip: builds EvidenceClip from selected text with context, URL, timestamp, and optional field/claim association
+- extractContext: extracts surrounding text (configurable radius) with ellipsis for truncation
+- addClip/removeClip: immutable list operations for managing clip collections
+- getClipsForField/getClipsForClaim: filter clips by associated field key or claim keyword
+- EvidenceClip type added to types/scan.ts with id, text, context, url, timestamp, fieldKey?, claimKeyword?
+- ScanResult updated with evidence: EvidenceClip[] array
+- Content script handles CLIP_EVIDENCE message: captures window selection, creates clip, returns to popup
+- 21 new unit tests for clipper module (100 total passing)
+
+Next task: F060 - Threadmark JSON Export (Phase 2)

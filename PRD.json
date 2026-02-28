@@ -179,7 +179,8 @@
       "id": "F050",
       "phase": 2,
       "name": "Evidence Clipper",
-      "description": "Highlight and save text as evidence"
+      "description": "Highlight and save text as evidence",
+      "status": "passes"
     },
     {
       "id": "F060",
