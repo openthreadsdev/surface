@@ -172,7 +172,8 @@
       "id": "F040",
       "phase": 1,
       "name": "Risk Score Model",
-      "description": "Explainable scoring based on missing disclosures and risky claims"
+      "description": "Explainable scoring based on missing disclosures and risky claims",
+      "status": "passes"
     },
     {
       "id": "F050",

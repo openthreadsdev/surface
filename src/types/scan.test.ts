@@ -53,6 +53,12 @@ describe("scan types", () => {
       claims: [],
       riskScore: 0,
       maxScore: 100,
+      riskBreakdown: {
+        score: 0,
+        maxScore: 100,
+        fieldPenalties: [],
+        claimPenalties: [],
+      },
     };
     expect(result.url).toContain("https://");
     expect(result.category).toBe("general");

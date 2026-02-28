@@ -3,5 +3,8 @@ export type {
   FieldStatus,
   FieldResult,
   ClaimFlag,
+  FieldPenalty,
+  ClaimPenalty,
+  RiskScoreBreakdown,
   ScanResult,
 } from "./scan.js";
